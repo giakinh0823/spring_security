@@ -1,19 +1,35 @@
 package com.example.security.student;
 
 public class Student {
-    private final Integer Id;
-    private final String name;
+    private Integer id;
+    private String name;
 
     public Student(Integer id, String name) {
-        Id = id;
+        this.id = id;
         this.name = name;
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
