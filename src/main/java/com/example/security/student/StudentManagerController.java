@@ -2,6 +2,7 @@ package com.example.security.student;
 
 
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -17,13 +18,17 @@ public class StudentManagerController {
             new Student(4, "Nguyễn Ngọc Hiếu")
     );
 
+    // hasRole('ROLE_') hasAnyRole('ROLE_')  hasAuthority('permission')  hasAnyAuthority('permission')
+
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMINTRAINEE')")
     public List<Student> getAllStudents(){
         System.out.println("List student");
         return STUDENTS;
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('student:write')")
     public void newStudent(@RequestBody Student student){
         System.out.println("Create student");
         if (student != null) {
@@ -33,12 +38,14 @@ public class StudentManagerController {
     }
 
     @DeleteMapping(path = "{studentId}")
+    @PreAuthorize("hasAuthority('student:write')")
     public void deleteStudent(@PathVariable("studentId") Integer studentId){
         System.out.println("Delete student");
         STUDENTS.removeIf(student -> student.getId().equals(studentId));
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('student:write')")
     public void updateStudent(@RequestBody Student student){
         System.out.println("Update student");
         Student stu = STUDENTS.stream()
