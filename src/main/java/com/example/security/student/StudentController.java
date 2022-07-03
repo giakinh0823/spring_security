@@ -19,6 +19,12 @@ public class StudentController {
             new Student(4, "Nguyễn Ngọc Hiếu")
     );
 
+    @GetMapping
+    public List<Student> getAllStudents(){
+        System.out.println("List student");
+        return STUDENTS;
+    }
+
     @GetMapping(path = "/{studentId}")
     public Student getStudent(@PathVariable("studentId") Integer studentId){
         return STUDENTS.stream()
